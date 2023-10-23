@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - My Flask Application</title>
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/boostrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script src="/static/scripts/modernizr-2.6.2.js"></script>
+</head>
+
+<body>
+    <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            >
+             <div class="container-fluid">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" >Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark">Order Manager</a>
+                        </li>
+                        <li class="nav-item text-dark" >
+                            <a class="nav-link text-dark" ><i class="bi bi-cart"></i></a>
+                        </li>
+
+                        {% if current_user.role=='admin' %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Content Management
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="{{ url_for('category') }}">Category</a></li>
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="nav-link" href={{ url_for('product_manager') }}>Product</a></li>
+
+                            </ul>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        {% if not current_user.is_authenticated%}
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href={{ url_for('register') }}>Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href={{ url_for('login') }}>Login</a>
+                            </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a id="manage" class="nav-link text-dark" >Hello {{ current_user.name }}</a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-link text-dark border-0" href={{ url_for('logout') }}>Logout</a>
+
+                        </li>
+
+                    {% endif %}
+                    </ul>
+                </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        {% block content %}{% endblock %}
+        <hr />
+        <footer>
+            <p>&copy; {{ year }} - My Flask Application</p>
+        </footer>
+    </div>
+
+    <script src="/static/scripts/jquery-1.10.2.js"></script>
+    <script src="/static/scripts/bootstrap.js"></script>
+    <script src="/static/scripts/respond.js"></script>
+    <script src="/static/scripts/respond.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script></script>
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

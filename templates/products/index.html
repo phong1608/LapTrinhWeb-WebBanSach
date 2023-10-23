@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% for product in products %}
+        <img class="img-rounded col-md-4" src="/static/images/{{ product.image_1 }}"/>
+        <h1>{{ product.name }}</h1>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+
+<h4>Category</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+
+
+            <div class="form-group">
+                <input type="text" name="name" value={{ category.name }} class="form-control">
+
+            </div>
+            <div class="form-group">
+                <input type="submit"  value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href={{ url_for('index') }}>Back to List</a>
+</div>
+{% endblock content %}
+
+
