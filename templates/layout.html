@@ -28,7 +28,7 @@
                             <a class="nav-link text-dark">Order Manager</a>
                         </li>
                         <li class="nav-item text-dark" >
-                            <a class="nav-link text-dark" ><i class="bi bi-cart"></i></a>
+                            <a href="{{ url_for("cart") }}" class="nav-link text-dark" ><i class="bi bi-cart"></i></a>
                         </li>
 
                         {% if current_user.role=='admin' %}
@@ -51,7 +51,7 @@
                     <ul class="navbar-nav">
                         {% if not current_user.is_authenticated%}
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href={{ url_for('register') }}>Register</a>
+                                <a class="nav-link text-dark" href={{ url_for('customer_register') }}>Register</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href={{ url_for('login') }}>Login</a>

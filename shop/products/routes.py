@@ -1,8 +1,9 @@
 from flask import render_template, redirect, url_for, flash, request
-from __init__ import db, app, photos,login_manager
+
+from __init__ import db, app, photos, login_manager
 from .models import Brand, Category, Product
 from shop.products.forms import Add_Product
-from flask_login import login_required
+from flask_login import login_required, current_user
 from shop.admin.models import User
 
 
@@ -10,9 +11,13 @@ from shop.admin.models import User
 def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
 
+
 @app.route('/add-brand', methods=['GET', 'POST'])
 @login_required
 def addbrand():
+    if current_user.role != 'admin':
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         get_brand = request.form.get('brand')
         brand = Brand(name=get_brand)
@@ -87,12 +92,14 @@ def edit_category(id):
 @app.route('/product/index', methods=['POST', 'GET'])
 def product_page():
     products = Product.query.all()
+
     return render_template('products/index.html', products=products)
 
 
 @app.route('/admin/product/manager')
 def product_manager():
     products = Product.query.all()
+
     return render_template('admin/products/index.html', products=products)
 
 
@@ -116,3 +123,10 @@ def delete_product(id):
         db.session.commit()
         return redirect(url_for('product_manager'))
     return render_template('admin/products/delete.html', delete_product=delete_product)
+
+
+@app.route('/detail/<int:id>')
+def product_detail(id):
+    product=Product.query.get(id)
+
+    return render_template('products/details.html',product=product)

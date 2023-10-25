@@ -2,12 +2,15 @@ from flask import Flask, flash
 from flask import render_template, session, request, redirect, url_for
 from __init__ import db, bcrypt, app
 import routes
+from shop.cart import routes
 from shop.forms import RegistrationForm, LoginForm
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from shop.admin.models import User
+from shop.customer.models import Register
 from shop.products import routes
 from __init__ import login_manager
+from shop.customer.forms import Registration
 from flask_login import login_user, logout_user, current_user
 
 
@@ -32,10 +35,10 @@ def register():
 
 @app.route('/register', methods=['GET', 'POST'])
 def customer_register():
-    form = RegistrationForm(request.form)
+    form = Registration(request.form)
     if request.method == 'POST' and form.validate():
         hash_password = bcrypt.generate_password_hash(form.password.data)
-        user = User(name=form.name.data, password=hash_password, email=form.email.data, role='customer')
+        user = User(name=form.name.data, password=hash_password, email=form.email.data, role='customer',contact=form.contact.data,address=form.address.data)
 
         db.session.add(user)
         db.session.commit()
