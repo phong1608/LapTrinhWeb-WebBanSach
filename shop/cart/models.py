@@ -28,3 +28,6 @@ class OrderHeader(db.Model):
 
 class OrderDetail(db.Model):
     __tablename__='OrderDetail'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    cart_id = db.Column(db.Integer, db.ForeignKey('cart.id'))
