@@ -22,5 +22,6 @@ class Product(db.Model):
     stock = db.Column(db.Integer, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('Category.id'), nullable=False)
     description=db.Column(db.String(255), nullable=False, unique=True)
+    author=db.Column(db.String(255), nullable=False, unique=False)
     image_1=db.Column(db.String(255))
     category = db.relationship("Category", backref=db.backref('category',lazy=True), primaryjoin="Product.category_id == Category.id")

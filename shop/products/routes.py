@@ -5,6 +5,7 @@ from .models import Brand, Category, Product
 from shop.products.forms import Add_Product
 from flask_login import login_required, current_user
 from shop.admin.models import User
+from shop.cart.models import Cart
 
 
 @login_manager.user_loader
@@ -125,8 +126,21 @@ def delete_product(id):
     return render_template('admin/products/delete.html', delete_product=delete_product)
 
 
-@app.route('/detail/<int:id>')
+@app.route('/detail/<int:id>', methods=['GET', 'POST'])
 def product_detail(id):
-    product=Product.query.get(id)
+    product = Product.query.get(id)
+    user_cart = Cart.query.filter_by(user_id=current_user.id , product_id=product.id).first()
 
-    return render_template('products/details.html',product=product)
+    if request.method == 'POST':
+        cart = Cart(user_id=current_user.id, product_id=product.id)
+        if user_cart is None:
+            cart = Cart(user_id=current_user.id, product_id=product.id, count=request.form.get('count'))
+            db.session.add(cart)
+            db.session.commit()
+            flash(f'Sản phẩm đã được thêm vào giỏ hàng', 'success')
+        else:
+            user_cart.count = user_cart.count + 1
+            db.session.commit()
+            flash(f'Sản phẩm đã được thêm vào giỏ hàng', 'success')
+
+    return render_template('products/details.html', product=product)
