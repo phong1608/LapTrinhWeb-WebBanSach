@@ -1,0 +1,150 @@
+{% extends 'layout.html' %}
+
+
+
+
+<form method="post">
+    <input asp-for="OrderHeader.Id" hidden />
+    <br />
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0">
+                <div class="container row">
+                    <div class="col-12 d-none d-md-block col-md-6 pb-1">
+                        <i class="fas fa-shopping-cart"></i> &nbsp; Order Summary
+                    </div>
+                    <div class="col-12 col-md-4 offset-md-2 text-right">
+                        <a href='{{ url_for('index') }}' class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 pb-4">
+                            <div class="row">
+                                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="text-primary">Thông tin nhận hàng</span>
+                                </h4>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Name</div>
+                                <div class="col-9">
+                                    {% if current_user.role==admin %}
+                                        <input value="{{ current_user.name }}" type="text" class="form-control" />
+
+                                    {% else %}
+                                        <input value="{{ current_user.name }}" readonly type="text" class="form-control" />
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Name</div>
+                                <div class="col-9">
+                                    {% if current_user.role==admin %}
+                                        <input value="{{ current_user.email }}" type="text" class="form-control" />
+
+                                    {% else %}
+                                        <input value="{{ current_user.email }}" readonly type="text" class="form-control" />
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                           <div class="row my-1">
+                                <div class="col-3">Name</div>
+                                <div class="col-9">
+                                    {% if current_user.role==admin %}
+                                        <input value="{{ current_user.contact }}" type="text" class="form-control" />
+
+                                    {% else %}
+                                        <input value="{{ current_user.contact }}" readonly type="text" class="form-control" />
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-3">Name</div>
+                                <div class="col-9">
+                                    {% if current_user.role==admin %}
+                                        <input value="{{ current_user.address }}" type="text" class="form-control" />
+
+                                    {% else %}
+                                        <input value="{{ current_user.address }}" readonly type="text" class="form-control" />
+                                    {% endif %}
+
+                                </div>
+                            </div>
+
+
+                            <div class="row my-1">
+                                <div class="col-3">Order Date</div>
+                                <div class="col-9">
+                                    <input value="{{order.date}}" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col-3">Shipping Date</div>
+                                <div class="col-9">
+                                    <input value="{{order.ship_date}}" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+
+
+
+
+                            </div>
+
+                        <div class="col-12 col-lg-5 offset-lg-1">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-primary">Đơn hàng</span>
+                            </h4>
+                            <label class="btn btn-outline-primary form-control my-2">Trạng thái đơn hàng - {{order.order_status}}</label>
+
+                            <ul class="list-group mb-3">
+                                {% for detail in order_detail %}
+                                    <li class="list-group-item d-flex justify-content-between p-2">
+                                        <div class="row container">
+                                            <div class="col-8">
+
+                                                <h6 class="my-0 text-primary">{{ detail.product.name }}</h6>
+                                                <small class="text-muted">Giá : {{ detail.product.price }}</small><br />
+                                                <small class="text-muted">Số lượng : {{  detail.count}}</small>
+                                            </div>
+                                            <div class="col-4 text-end">
+                                                <p class="text-success">{{  detail.count * detail.product.price}}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+
+                            {% if current_user.role!='admin' %}
+                                <button type="submit" class="btn btn-success form-control my-1">Thanh toán</button>
+                            }
+                            {% elif current_user.role=='admin'  and order.order_status='Đang xử lý' %}
+                                    <button type="submit" name="order_status"
+                                            class="btn btn-primary form-control my-1">
+                                        Chuẩn bị hàng
+                                    </button>
+
+                                {%   elif current_user.role==admin and order.order_status=='Chuẩn bị hàng') %}
+                                    <button type="submit" asp-action="ShipOrder"  class="btn btn-primary form-control my-1">Giao hàng</button>
+
+
+                                {% elif current_user.role==admin and order.order_status=='Đã giao hàng')  %}
+                                    <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
+                                }
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock content %}
