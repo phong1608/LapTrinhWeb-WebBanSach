@@ -13,23 +13,34 @@
 </head>
 
 <body>
-    <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<style>
+    .img-size {
+        width: 398px; /* You can set the dimensions to whatever you want */
+        height: 200px;
+        object-fit: cover;
+    }
+    .product-size{
+        width: 450px; /* You can set the dimensions to whatever you want */
+        height: 400px;
+        object-fit: cover
+    }
+
+</style>
+    <div class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
             >
              <div class="container-fluid">
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ url_for('index') }}">Home</a>
+                            <a class="nav-link text-dark" href="{{ url_for('index') }}">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" >Privacy</a>
+                            <a href="{{ url_for('product_page') }}" class="nav-link text-dark">Sản phẩm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark">Order Manager</a>
+                            <a href="{{ url_for('order_manager') }}" class="nav-link text-dark">Đơn hàng</a>
                         </li>
-                        <li class="nav-item text-dark" >
-                            <a href="{{ url_for("cart") }}" class="nav-link text-dark" ><i class="bi bi-cart"></i></a>
-                        </li>
+
 
                         {% if current_user.role=='admin' %}
                         <li class="nav-item dropdown">
@@ -49,6 +60,11 @@
                     </ul>
 
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="{{ url_for('cart') }}" class="nav-link text-dark">
+                                <i class="bi bi-cart mr-2"></i> Giỏ hàng
+                            </a>
+                        </li>
                         {% if not current_user.is_authenticated%}
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href={{ url_for('customer_register') }}>Register</a>
@@ -57,13 +73,13 @@
                                 <a class="nav-link text-dark" href={{ url_for('login') }}>Login</a>
                             </li>
                         {% else %}
-                        <li class="nav-item">
-                            <a id="manage" class="nav-link text-dark" >Hello {{ current_user.name }}</a>
-
+                        <li class="nav-item d-flex align-items-center">
+                            <i class="bi bi-person-circle mr-2"></i>
+                            <a id="manage" class="nav-link text-dark">{{ current_user.name }}</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-flex align-items-center">
+                            <i class="bi bi-box-arrow-in-right mr-2"></i>
                             <a class="nav-link btn btn-link text-dark border-0" href={{ url_for('logout') }}>Logout</a>
-
                         </li>
 
                     {% endif %}
@@ -75,9 +91,29 @@
     <div class="container body-content">
         {% block content %}{% endblock %}
         <hr />
-        <footer>
-            <p>&copy; {{ year }} - My Flask Application</p>
-        </footer>
+        <footer class="bg-dark text-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Về Chúng Tôi</h5>
+                <p><i class="bi bi-geo-alt-fill"></i> Số 2, Lô C, Ngõ 238, Hoàng Quốc Việt, Bắc Từ Liêm, Hà Nội</p>
+                <p><i class="bi bi-envelope"></i> nhasachonline116@gmail.com</p>
+                <p><i class="bi bi-telephone-fill"></i> (+84) 902232358</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Điều Khoản - Chính Sách</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Chính sách thanh toán</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Giải quyết khiếu nại</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
     </div>
 
     <script src="/static/scripts/jquery-1.10.2.js"></script>

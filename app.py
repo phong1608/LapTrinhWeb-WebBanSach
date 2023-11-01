@@ -3,12 +3,14 @@ from flask import render_template, session, request, redirect, url_for
 from __init__ import db, bcrypt, app
 import routes
 from shop.cart import routes
+from shop.order import routes
 from shop.forms import RegistrationForm, LoginForm
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from shop.admin.models import User
 from shop.customer.models import Register
 from shop.products import routes
+from shop.Review import routes
 from __init__ import login_manager
 from shop.customer.forms import Registration
 from flask_login import login_user, logout_user, current_user

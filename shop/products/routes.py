@@ -60,13 +60,14 @@ def add_product():
         discount = form.discount.data
         stock = form.stock.data
         description = form.description.data
+        author = form.author.data
         category = request.form.get('category')
         image_1 = photos.save(request.files.get('image_1'))
         addpro = Product(name=name, price=price, discount=discount, stock=stock, description=description,
-                         category_id=category, image_1=image_1)
+                         category_id=category, image_1=image_1, author=author)
         db.session.add(addpro)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for('product_manager'))
     return render_template('products/add-product.html', form=form, categories=categories, brands=brands)
 
 
@@ -92,9 +93,21 @@ def edit_category(id):
 
 @app.route('/product/index', methods=['POST', 'GET'])
 def product_page():
-    products = Product.query.all()
+    page= request.args.get('page',1,type=int)
+    category = Category.query.all()
+    products = Product.query.paginate(page=page,per_page=4)
 
-    return render_template('products/index.html', products=products)
+
+    return render_template('products/index.html', products=products, categories=category)
+
+
+@app.route('/product/index/<int:id>')
+def product_filter(id):
+    products = Product.query.filter_by(category_id=id).all()
+    title = Category.query.filter_by(id=id).first()
+    categories = Category.query.all()
+
+    return render_template('products/filter-by-category.html', products=products, categories=categories, title=title)
 
 
 @app.route('/admin/product/manager')
@@ -129,18 +142,22 @@ def delete_product(id):
 @app.route('/detail/<int:id>', methods=['GET', 'POST'])
 def product_detail(id):
     product = Product.query.get(id)
-    user_cart = Cart.query.filter_by(user_id=current_user.id , product_id=product.id).first()
 
     if request.method == 'POST':
-        cart = Cart(user_id=current_user.id, product_id=product.id)
-        if user_cart is None:
-            cart = Cart(user_id=current_user.id, product_id=product.id, count=request.form.get('count'))
-            db.session.add(cart)
-            db.session.commit()
-            flash(f'Sản phẩm đã được thêm vào giỏ hàng', 'success')
+        if current_user.is_authenticated:
+            user_cart = Cart.query.filter_by(user_id=current_user.id, product_id=product.id).first()
+            cart = Cart(user_id=current_user.id, product_id=product.id)
+            if user_cart is None:
+                cart = Cart(user_id=current_user.id, product_id=product.id, count=request.form.get('count'))
+                db.session.add(cart)
+                db.session.commit()
+                flash(f'Sản phẩm đã được thêm vào giỏ hàng', 'success')
+            else:
+                user_cart.count = user_cart.count + 1
+                db.session.commit()
+                flash(f'Sản phẩm đã được thêm vào giỏ hàng', 'success')
         else:
-            user_cart.count = user_cart.count + 1
-            db.session.commit()
-            flash(f'Sản phẩm đã được thêm vào giỏ hàng', 'success')
+            flash('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng', 'warning')
+            return redirect(url_for('login'))
 
     return render_template('products/details.html', product=product)

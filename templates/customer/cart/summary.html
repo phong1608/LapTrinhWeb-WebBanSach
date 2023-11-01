@@ -36,12 +36,21 @@
 									<span  name="name" class="text-danger"></span>
 								</div>
 							</div>
+                        <div class="row my-1">
+								<div class="col-3">
+									<label>Email</label>
+								</div>
+								<div class="col-9">
+									<input value="{{ user.email }}" name="email" class="form-control" />
+									<span  name="email" class="text-danger"></span>
+								</div>
+							</div>
 							<div class="row my-1">
 								<div class="col-3">
 									<label>Số điện thoại</label>
 								</div>
 								<div class="col-9">
-									<input value="{{ user.contact }}" class="form-control" />
+									<input value="{{ user.contact }}" name='contact' class="form-control" />
 									<span name="contact" class="text-danger"></span>
 								</div>
 							</div>

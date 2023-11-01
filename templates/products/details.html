@@ -33,20 +33,18 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="/static/images/{{ product.image_1 }}"  class="rounded " />
+                        <img src="/static/images/{{ product.image_1 }}" class="rounded img-fluid" />
                     </div>
                     <div class="col-12 col-lg-6 offset-lg-1">
-
                         <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">{{ product.category.name }}</span>
+                            <a href="{{ url_for('product_filter',id=product.category.id) }}" class="badge bg-primary text-white">{{ product.category.name }}</a>
                         </div>
 
                         <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50  pb-2">
-                                {{ product.price }}
+                            <h6 class="text-dark text-opacity-50 pb-2">
+                                {{ product.price }}VNĐ
                             </h6>
                         </div>
-
 
                         <div class="row pl-2 my-3">
                             <p class="text-secondary lh-sm">{{ product.description }}</p>
@@ -54,21 +52,17 @@
                         <div class="row pl-2 mb-3">
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"
-                                          id="inputGroup-sizing-default">
+                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold" id="inputGroup-sizing-default">
                                         Count
                                     </span>
-                                    <input  type="number" name="count" value="1" class="form-control text-end"
-                                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-
+                                    <input type="number" name="count" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit"
-                                        class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Thêm vào rỏ hàng
+                                <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
+                                    Thêm vào giỏ hàng
                                 </button>
                             </div>
                         </div>
@@ -79,4 +73,5 @@
         </div>
     </div>
 </form>
+
 {% endblock content %}

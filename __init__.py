@@ -5,7 +5,6 @@ from flask_uploads import IMAGES, UploadSet, configure_uploads, patch_request_cl
 import os
 from flask_login import LoginManager,login_user
 
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask('__name__')
@@ -18,6 +17,7 @@ patch_request_class(app)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
 login_manager = LoginManager()
 
 login_manager.__init__(app)

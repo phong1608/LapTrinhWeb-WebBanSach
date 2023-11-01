@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 
-
+{% block content %}
 
 <form method="post">
     <input asp-for="OrderHeader.Id" hidden />
@@ -28,49 +28,49 @@
                                 </h4>
                             </div>
                             <div class="row my-1">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Tên người nhận</div>
                                 <div class="col-9">
                                     {% if current_user.role==admin %}
-                                        <input value="{{ current_user.name }}" type="text" class="form-control" />
+                                        <input value="{{ order_header.user.name }}" type="text" class="form-control" />
 
                                     {% else %}
-                                        <input value="{{ current_user.name }}" readonly type="text" class="form-control" />
+                                        <input value="{{ order_header.user.name }}" readonly type="text" class="form-control" />
                                     {% endif %}
 
                                 </div>
                             </div>
                             <div class="row my-1">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Email</div>
                                 <div class="col-9">
                                     {% if current_user.role==admin %}
-                                        <input value="{{ current_user.email }}" type="text" class="form-control" />
+                                        <input value="{{ order_header.user.email }}" type="text" class="form-control" />
 
                                     {% else %}
-                                        <input value="{{ current_user.email }}" readonly type="text" class="form-control" />
+                                        <input value="{{ order_header.user.email }}" readonly type="text" class="form-control" />
                                     {% endif %}
 
                                 </div>
                             </div>
                            <div class="row my-1">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Số điện thoại</div>
                                 <div class="col-9">
                                     {% if current_user.role==admin %}
-                                        <input value="{{ current_user.contact }}" type="text" class="form-control" />
+                                        <input value="{{ order_header.user.contact }}" type="text" class="form-control" />
 
                                     {% else %}
-                                        <input value="{{ current_user.contact }}" readonly type="text" class="form-control" />
+                                        <input value="{{ order_header.user.contact }}" readonly type="text" class="form-control" />
                                     {% endif %}
 
                                 </div>
                             </div>
                             <div class="row my-1">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Địa chỉ</div>
                                 <div class="col-9">
-                                    {% if current_user.role==admin %}
-                                        <input value="{{ current_user.address }}" type="text" class="form-control" />
+                                    {% if current_user.role!=admin %}
+                                        <input value="{{ order_header.user.address }}" type="text" class="form-control" />
 
                                     {% else %}
-                                        <input value="{{ current_user.address }}" readonly type="text" class="form-control" />
+                                        <input value="{{order_header.user.address }}" readonly type="text" class="form-control" />
                                     {% endif %}
 
                                 </div>
@@ -78,18 +78,20 @@
 
 
                             <div class="row my-1">
-                                <div class="col-3">Order Date</div>
+                                <div class="col-3">Ngày đặt hàng</div>
                                 <div class="col-9">
-                                    <input value="{{order.date}}" readonly type="text" class="form-control" />
+                                    <input value="{{order_header.order_date}}" readonly type="text" class="form-control" />
+                                </div>
+                            </div>
+                        <div class="row my-1">
+                                <div class="col-3">Ngày giao hàng</div>
+                                <div class="col-9">
+                                    <input value="{{order_header.ship_date}}" readonly type="text" class="form-control" />
                                 </div>
                             </div>
 
-                            <div class="row my-1">
-                                <div class="col-3">Shipping Date</div>
-                                <div class="col-9">
-                                    <input value="{{order.ship_date}}" readonly type="text" class="form-control" />
-                                </div>
-                            </div>
+
+
 
 
 
@@ -100,7 +102,7 @@
                             <h4 class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="text-primary">Đơn hàng</span>
                             </h4>
-                            <label class="btn btn-outline-primary form-control my-2">Trạng thái đơn hàng - {{order.order_status}}</label>
+                            <label class="btn btn-outline-primary form-control my-2">Trạng thái đơn hàng - {{order_header.order_status}}</label>
 
                             <ul class="list-group mb-3">
                                 {% for detail in order_detail %}
@@ -117,27 +119,29 @@
                                             </div>
                                         </div>
                                     </li>
-                                }
+                                {% endfor %}
 
                             </ul>
 
                             {% if current_user.role!='admin' %}
-                                <button type="submit" class="btn btn-success form-control my-1">Thanh toán</button>
-                            }
-                            {% elif current_user.role=='admin'  and order.order_status='Đang xử lý' %}
-                                    <button type="submit" name="order_status"
+                                <a type="submit" class="btn btn-success form-control my-1">Thanh toán</a>
+
+                        {% endif %}
+                            {% if current_user.role=='admin'  and order_header.order_status=='Đang xử lý' %}
+                                    <a href="{{ url_for('order_status_shipping',id=order_header.id) }}"
                                             class="btn btn-primary form-control my-1">
-                                        Chuẩn bị hàng
-                                    </button>
-
-                                {%   elif current_user.role==admin and order.order_status=='Chuẩn bị hàng') %}
-                                    <button type="submit" asp-action="ShipOrder"  class="btn btn-primary form-control my-1">Giao hàng</button>
-
-
-                                {% elif current_user.role==admin and order.order_status=='Đã giao hàng')  %}
-                                    <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
-                                }
+                                        Giao hàng
+                                    </a>
                             {% endif %}
+                                {% if current_user.role=='admin' and order_header.order_status=='Đang giao hàng' %}
+                                    <a href="{{ url_for('order_status_shipped',id=order_header.id) }}"
+                                       class="btn btn-primary form-control my-1">
+                                        Đã giao hàng
+                                    </a>{% endif %}
+
+
+
+
                         </div>
                     </div>
                 </div>
