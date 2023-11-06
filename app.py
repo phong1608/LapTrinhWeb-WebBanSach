@@ -2,6 +2,7 @@ from flask import Flask, flash
 from flask import render_template, session, request, redirect, url_for
 from __init__ import db, bcrypt, app
 import routes
+from shop.customer import routes
 from shop.cart import routes
 from shop.order import routes
 from shop.forms import RegistrationForm, LoginForm

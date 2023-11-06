@@ -9,7 +9,7 @@ class Add_Product(Form):
     author = StringField('Tác giả', [validators.DataRequired()])
     discount = IntegerField("Khuyến mãi", default=0)
     description = TextAreaField("Mô tả", [validators.DataRequired()])
-    image_1 = FileField('Hình ảnh', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
+    image_1 = FileField('Hình ảnh', validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg'])])
 
 
 class SearchForm(Form):

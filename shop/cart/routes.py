@@ -69,6 +69,7 @@ def summary():
         user.email = request.form.get('email')
         user.address = request.form.get('address')
         user.contact = request.form.get('contact')
+        
         date = datetime.date.today()
         order_header = OrderHeader(user_id=current_user.id, order_date=date, order_status='Đang xử lý')
         db.session.add(order_header)
@@ -76,6 +77,8 @@ def summary():
         db.session.commit()
         for cart in carts:
             order_detail = OrderDetail(product_id=cart.product_id, order_id=order_header.id, count=cart.count)
+            product = Product.query.filter_by(id=order_detail.product_id).first()
+            product.stock = product.stock-order_detail.count
             db.session.add(order_detail)
             db.session.delete(cart)
             db.session.commit()

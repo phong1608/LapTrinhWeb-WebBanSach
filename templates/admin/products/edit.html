@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<h4>Chỉnh sửa sản phẩm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" value="{{product.name}}" name="name" class="form-control" placeholder="Tên sản phẩm">
+            </div>
+            <div class="form-group">
+                <input type="text" value="{{product.price}}" name="price" class="form-control" placeholder="Giá">
+            </div>
+            <div class="form-group">
+                <input type="text" value="{{product.stock}}" name="stock" class="form-control" placeholder="Số lượng">
+            </div>
+            <div class="form-group">
+                <input type="text" value="{{product.description}}" name="description" class="form-control" placeholder="Mô tả">
+            </div>
+            <label for="category">Thêm danh mục</label>
+                <select name="category_id" id="brand" class="form-control">
+                    <option value="product.category.id">{{product.category.name}}</option>
+                    {% for category in categories %}
+                    <option  value={{ category.id }}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            <div class="container">
+                <div class="col-md-4"><input type="file" name="image_1"></div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock content %}
+
+

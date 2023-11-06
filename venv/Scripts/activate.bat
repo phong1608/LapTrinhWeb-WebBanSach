@@ -1,4 +1,4 @@
-@set "VIRTUAL_ENV=C:\Users\ADMIN\PycharmProjects\flaskProject\venv"
+@set "VIRTUAL_ENV=C:\Users\phong\Documents\python\LapTrinhWeb-WebBanSach\venv"
 
 @set "VIRTUAL_ENV_PROMPT="
 @if NOT DEFINED VIRTUAL_ENV_PROMPT (

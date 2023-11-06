@@ -1,13 +1,18 @@
 {% extends 'layout.html' %}
 {% block content %}
     <form method="post">
+        <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <link rel="stylesheet" type="text/css" href="/static/content/boostrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <br />
     <div class="card shadow border-0">
         <div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
             <div class="row px-4">
                 <div class="col-6">
                     <h5 class="pt-2 text-white">
-                        Shopping Cart
+                        Giỏ hàng
                     </h5>
                 </div>
 
@@ -18,7 +23,7 @@
             </div>
             <div class="row mb-3 pb-3">
                 <div class="col-md-2 offset-md-1">
-                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary text-uppercase mb-5 btn-sm"><small>Continue Shopping</small></a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary text-uppercase mb-5 btn-sm"><small>Tiếp tục mua sắm</small></a>
                 </div>
                 	<div class="col-md-10 offset-md-1">
 
@@ -71,7 +76,7 @@
                     <div class="col-md-4 offset-md-4">
                         <ul class="list-group mb-4">
                             <li class="d-flex justify-content-between align-items-center">
-                                <h5 class="text-dark text-center fw-semibold text-uppercase"> Total {{ total }} (USD)</h5>
+                                <h5 class="text-dark text-center fw-semibold text-uppercase"> Tổng {{ total }} (VNĐ)</h5>
 
                             </li>
                         </ul>

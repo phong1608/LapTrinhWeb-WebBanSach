@@ -1,6 +1,6 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request,current_app
 
-from __init__ import db, app, photos, login_manager
+from __init__ import db, app, photos, login_manager,os
 from .models import Brand, Category, Product
 from shop.products.forms import Add_Product
 from flask_login import login_required, current_user
@@ -120,12 +120,24 @@ def product_manager():
 @app.route('/admin/product/edit/<int:id>', methods=['POST', 'GET'])
 def edit_product(id):
     edit_product = Product.query.get(id)
+    categories=Category.query.all()
     if request.method == 'POST':
         edit_product.name = request.form.get('name')
+        edit_product.price=request.form.get('price')
+        edit_product.category_id=request.form.get('category_id')
+        edit_product.description = request.form.get('description')
+        edit_product.stock= request.form.get('stock')
+        if request.files.get('image_1'):
+            try:
+                os.unlink(os.path.join(current_app.root_path,'static/images'+ edit_product.image_1))
+                edit_product.image_1 = photos.save(request.files.get('image_1'))
+            except:
+                edit_product.image_1 = photos.save(request.files.get('image_1'))
+
 
         db.session.commit()
         return redirect(url_for('product_page'))
-    return render_template('admin/category/edit.html', edit_product=edit_product)
+    return render_template('admin/products/edit.html', product=edit_product,categories=categories)
 
 
 @app.route('/admin/product/delete/<int:id>', methods=['GET', 'POST'])

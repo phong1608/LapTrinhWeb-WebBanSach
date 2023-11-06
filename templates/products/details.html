@@ -12,66 +12,78 @@
     {% endif %}
     {% endwith %}
 <form method="post">
-
-    <div class="card shadow border-0 mt-4 mb-4">
-        <div class="card-header bg-secondary bg-gradient text-light py-4">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">{{ product.name }}</h3>
-                    <p class="text-white-50 fw-semibold mb-0">{{ product.author }}</p>
-                </div>
-            </div>
+    
+    <section class="py-5">
+  <div class="container">
+    <div class="row gx-5">
+      <aside class="col-lg-6">
+        <div class="border rounded-4 mb-3 d-flex justify-content-center">
+            <img class="img-product" src="/static/images/{{ product.image_1 }}">
         </div>
-        <div class="card-body">
-            <div class="py-3">
-                <div class="row">
-                    <div class="col-6 col-md-2 offset-lg-1 pb-1">
-                        <a href="{{ url_for('index') }}" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm text-uppercase">
-                            <small>Về trang chủ</small>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="/static/images/{{ product.image_1 }}" class="rounded img-fluid" />
-                    </div>
-                    <div class="col-12 col-lg-6 offset-lg-1">
-                        <div class="col-12 col-md-6 pb-4">
-                            <a href="{{ url_for('product_filter',id=product.category.id) }}" class="badge bg-primary text-white">{{ product.category.name }}</a>
-                        </div>
+        
+      </aside>
+      <main class="col-lg-6">
+        <div class="ps-lg-3">
+          <h4 class="title text-dark">
+            {{product.name}}
+          </h4>
+          <div class="d-flex flex-row my-3">
+            
+            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>Còn {{ product.stock}}</span>
+            
+          </div>
 
-                        <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 pb-2">
-                                {{ product.price }}VNĐ
-                            </h6>
-                        </div>
+          <div class="mb-3">
+            <span class="h5">{{product.price}} VNĐ</span>
+            <span class="text-muted">/quyển </span>
+          </div>
 
-                        <div class="row pl-2 my-3">
-                            <p class="text-secondary lh-sm">{{ product.description }}</p>
-                        </div>
-                        <div class="row pl-2 mb-3">
+          <p>
+            {{product.description}}
+          </p>
+
+          <div class="row">
+            <dt class="col-3">Danh mục</dt>
+            <dd class="col-9">{{product.category.name}}</dd>
+          </div>
+
+          <hr />
+
+          <div class="row mb-4">
+            
+            <!-- col.// -->
+            <div class="row pl-2 mb-3">
                             <div class="col-md-4">
                                 <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold" id="inputGroup-sizing-default">
-                                        Count
+                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"
+                                          id="inputGroup-sizing-default">
+                                        Số lượng
                                     </span>
-                                    <input type="number" name="count" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                                    <input  type="number" name="count" value="1" class="form-control text-end"
+                                           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
-                                    Thêm vào giỏ hàng
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6 pb-1">
+                <button type="submit"
+                        class="btn btn-warning  ">
+                    Mua ngay
+                </button>
+                <button type="submit"
+                        class="btn btn-primary bg-gradient  py-2 text-uppercase fw-semibold">
+                    Thêm vào rỏ hàng
+                </button>
             </div>
         </div>
+          
+        </div>
+      </main>
     </div>
+  </div>
+</section>
 </form>
 
 {% endblock content %}
