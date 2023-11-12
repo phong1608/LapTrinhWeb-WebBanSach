@@ -3,6 +3,13 @@
 <br>
 <br>
 <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.css"/>
+<style>
+	.product-card{
+		height: 510px;
+		width: 253px;
+	}
+</style>
+</style>
 <section class="section-content padding-y">
 <div class="container">
 
@@ -48,19 +55,15 @@
 
 	</aside> <!-- col.// -->
 	<main class="col-md-9">
-
-
-		
-		
-		
-		
 		
 			<div class="row">
 				{% for product in products.items %}
 					<div class="col-lg-4 col-sm-12 mb-4">
-						<div class="card border-0 p-3 shadow border-top border-5 rounded d-flex flex-column align-items-stretch">
+						<div class="card border-0 p-3 shadow border-top border-5 rounded d-flex flex-column align-items-stretch product-card">
 							{% if product.image_1 != None %}
-								<img src="/static/images/{{ product.image_1 }}" class="card-img-top rounded align-self-auto flex-grow-1" />
+								<div class="img-wrap">
+									<img src="/static/images/{{ product.image_1 }}" class="product-item" />
+								</div>
 							{% else %}
 								<img src="https://placehold.co/500x600/png" class="card-img-top rounded flex-grow-1" />
 							{% endif %}

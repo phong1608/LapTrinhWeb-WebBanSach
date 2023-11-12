@@ -1,20 +1,22 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href="/static/content/bootstrap.css"/>
+
 <form method="post">
 	<br />
 	<div class="container">
 		<div class="card shadow border-0">
 
-			<div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
+			<div class="card-header bg-dark bg-primary text-light ml-0 py-4">
 				<div class="row px-4">
 					<div class="col-6">
-						<h5 class="pt-2 text-white">
-							Order Summary
+						<h5 class="pt-2 text-white ">
+							Chi tiết đơn hàng
 						</h5>
 					</div>
 					<div class="col-6 text-end">
-						<a href="{{ url_for('cart') }}" class="btn btn-outline-danger btn-sm">Trở về giỏ hàng</a>
+						<a href="{{ url_for('cart') }}" class="btn btn-primary btn-sm">Trở về giỏ hàng</a>
 					</div>
 				</div>
 			</div>
@@ -74,15 +76,15 @@
 								<li class="list-group-item d-flex justify-content-between">
 									<div>
 											<h6 class="my-0">{{ cart.product.name }}</h6>
-											<small class="text-muted">Quantity: {{ cart.count }}</small>
+											<small class="text-muted">Số lượng: {{ cart.count }}</small>
 									</div>
-									<span class="text-muted">{{ cart.count * cart.product.price }} </span>
+									<span class="text-muted">{{ cart.count * cart.product.price }} VNĐ </span>
 								</li>
 								{% endfor %}
 
 								<li class="list-group-item d-flex justify-content-between bg-light">
-									<small class="text-info">Total (USD)</small>
-									<strong class="text-info">{{ total }}</strong>
+									<small class="text-info">Tổng </small>
+									<strong class="text-info">{{ total }} VNĐ</strong>
 								</li>
 							</ul>
 						</div>
@@ -98,7 +100,7 @@
 						</p>
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+						<button type="submit" value="Place Order" class="btn btn-primary form-control">Đặt hàng</button>
 					</div>
 				</div>
 			</div>

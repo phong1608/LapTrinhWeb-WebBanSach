@@ -95,7 +95,7 @@ def edit_category(id):
 def product_page():
     page= request.args.get('page',1,type=int)
     category = Category.query.all()
-    products = Product.query.paginate(page=page,per_page=4)
+    products = Product.query.paginate(page=page,per_page=6)
 
 
     return render_template('products/index.html', products=products, categories=category)

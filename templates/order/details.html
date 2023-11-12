@@ -3,8 +3,9 @@
 
 {% block content %}
 
+
+
 <form method="post">
-    <input asp-for="OrderHeader.Id" hidden />
     <br />
     <div class="container">
         <div class="card">
@@ -55,6 +56,7 @@
                                 <div class="col-3">Số điện thoại</div>
                                 <div class="col-9">
                                     {% if current_user.role==admin %}
+                                    
                                         <input value="{{ order_header.user.contact }}" type="text" class="form-control" />
 
                                     {% else %}
@@ -89,9 +91,19 @@
                                     <input value="{{order_header.ship_date}}" readonly type="text" class="form-control" />
                                 </div>
                             </div>
+                        <div>
+                            <h3>Đánh giá dơn hàng</h3>
+                            <div class="container" style="color: yellow;">
+                                <input type="hidden" class="rating" min="1" max="5" step="1" data-size="lg">
+                                <script >
+                                    $(document).ready(function(){
+                                        $('.rating').rating();
+                                    });
+                                </script>   
+                            </div>
+                        </div>
 
-
-
+                                                     
 
 
 
@@ -108,8 +120,9 @@
                                 {% for detail in order_detail %}
                                     <li class="list-group-item d-flex justify-content-between p-2">
                                         <div class="row container">
+                                            <img src="/static/images/{{ detail.product.image_1 }}" class="w-50 h-50"/>
                                             <div class="col-8">
-
+                                                    
                                                 <h6 class="my-0 text-primary">{{ detail.product.name }}</h6>
                                                 <small class="text-muted">Giá : {{ detail.product.price }}</small><br />
                                                 <small class="text-muted">Số lượng : {{  detail.count}}</small>

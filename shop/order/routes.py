@@ -10,8 +10,10 @@ import datetime
 @app.route('/order-manager', methods=['POST', 'GET'])
 @login_required
 def order_manager():
-    order_header = OrderHeader.query.all()
-
+    if current_user.role=='admin':
+     order_header = OrderHeader.query.all()
+    else:
+       order_header = OrderHeader.query.filter_by(user_id=current_user.id)
     return render_template('order/index.html', order_header=order_header)
 
 
@@ -45,3 +47,5 @@ def order_status_shipped(id):
     db.session.commit()
 
     return redirect(url_for('order_detail', id=id))
+
+
